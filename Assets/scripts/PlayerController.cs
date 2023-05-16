@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 direction;
     private bool isWalk;
 
+
+    [Header("Camera")]
+    public GameObject camB;
+
     // Start is called before the first frame update
     void Start()
     {
