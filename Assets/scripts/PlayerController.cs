@@ -16,10 +16,6 @@ public class PlayerController : MonoBehaviour
     private Vector3 direction;
     private bool isWalk;
 
-
-    [Header("Camera")]
-    public GameObject camB;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +29,19 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
+        Inputs();
+
+        MoveCharacter();
+
+        UpdateAnimator();
+
+    }
+
+
+    #region My methods
+
+    void Inputs()
+    {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
@@ -42,10 +51,11 @@ public class PlayerController : MonoBehaviour
             anim.SetTrigger("Attack");
         }
 
-
         direction = new Vector3(horizontal, 0f, vertical).normalized;
+    }
 
-
+    void MoveCharacter()
+    {
         if (direction.magnitude > 0.1f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
@@ -59,27 +69,16 @@ public class PlayerController : MonoBehaviour
 
 
         controller.Move(direction * movementSpeed * Time.deltaTime);
+    }
+
+    void UpdateAnimator()
+    {
         anim.SetBool("isWalk", isWalk);
-
     }
+    #endregion
 
-    private void OnTriggerEnter(Collider other)
-    {
-        switch(other.gameObject.tag)
-        {
-            case "CamTrigger":
-                camB.SetActive(true);
-            break;
-        }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        switch (other.gameObject.tag)
-        {
-            case "CamTrigger":
-                camB.SetActive(false);
-                break;
-        }
-    }
+
+
+
 }
