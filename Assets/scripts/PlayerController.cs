@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     [Header("Attack Config")]
     public ParticleSystem fxAttack;
 
+    [SerializeField]
+    private bool isAttack;
+
 
     // Start is called before the first frame update
     void Start()
@@ -61,8 +64,12 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
-        anim.SetTrigger("Attack");
-        fxAttack.Emit(1);
+        if (!isAttack)
+        {
+            isAttack = true;
+            anim.SetTrigger("Attack");
+            fxAttack.Emit(1);
+        }
     }
 
     void MoveCharacter()
@@ -86,7 +93,17 @@ public class PlayerController : MonoBehaviour
     {
         anim.SetBool("isWalk", isWalk);
     }
+
+    void AttackIsDone()
+    {
+        isAttack = false;
+    }
+
+
+
+
     #endregion
+
 
 
 
