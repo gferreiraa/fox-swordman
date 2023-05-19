@@ -16,6 +16,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 direction;
     private bool isWalk;
 
+
+    [Header("Attack Config")]
+    public ParticleSystem fxAttack;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,10 +53,16 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            anim.SetTrigger("Attack");
+            Attack();
         }
 
         direction = new Vector3(horizontal, 0f, vertical).normalized;
+    }
+
+    void Attack()
+    {
+        anim.SetTrigger("Attack");
+        fxAttack.Emit(1);
     }
 
     void MoveCharacter()
